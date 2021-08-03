@@ -1,0 +1,25 @@
+library(readxl)
+data <- read_excel('data.xlsx')
+
+install.packages('tidyverse')
+library(tidyverse)
+
+data1 <- data %>%
+  filter (MentorshipType=='1')
+
+data2 <- data %>%
+  filter (MentorshipType=='2')
+
+data1_a <- subset(data1, select = c(MenteeID, MentorID))
+
+data2_a <- subset(data2, select = c(MenteeID, MentorID))
+
+#count of mentees by mentor
+data_mentor_count_1 <- data1 %>% group_by(MentorID) %>% tally()
+
+data_mentor_count_2 <- data2 %>% group_by(MentorID) %>% tally()
+
+#counts by year
+data_mentor_count_1_by_year <- data1 %>% group_by(MentorID) %>% filter(StopYear>2000.0 & StopYear<2005.0) %>% tally()
+
+data_mentor_count_2_by_year <- data2 %>% group_by(MentorID) %>% filter(StopYear>1996.0 & StopYear<2005.0) %>% tally(
